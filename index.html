@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Clear Path Takeoff — MVP</title>
   <link rel="stylesheet" href="styles.css"/>
-  <!-- PDF.js (ESM) - pinned to cdnjs 4.6.82 -->
-  <script type="module">
-    import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs';
-    // Worker file for PDF.js 4.x is also ESM
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.mjs';
-    window.pdfjsLib = pdfjsLib;
-  </script>
-  <!-- PDF.js (UMD) -->
+<!-- PDF.js (UMD) -->
   <!-- Konva (overlay canvas) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.3.18/konva.min.js"></script>
+  <!-- PDF.js (UMD) pinned to v3 for maximum compatibility -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Point PDF.js to its worker file
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/konva@10.0.12/konva.min.js"></script>
 </head>
 <body>
   <header class="topbar">
