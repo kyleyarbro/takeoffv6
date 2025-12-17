@@ -1,8 +1,4 @@
-if (!window.Konva) { console.warn('Konva failed to load'); }
-// NOTE: iOS Safari + GitHub Pages can sometimes block PDF.js web worker loading.
-// Disabling the worker makes loading more reliable (a bit slower for huge PDFs).
-if (window.pdfjsLib) {
-  try { window.window.pdfjsLib.disableWorker = true; } catch(e) {}
+if (!window.pdfjsLib) { console.error('PDF.js did not load'); }
 }
 const els = {
   openBtn: document.getElementById("openBtn"),
@@ -168,7 +164,7 @@ function updateSummary(){
 }
 
 async function loadPdf(file){
-  if (!window.pdfjsLib) { toast('PDF.js is still loading. Refresh the page and try again.'); return; }
+  if (!window.pdfjsLib) { toast('PDF.js did not load. Check connection/ad-blocker then refresh.'); return; }
 
   try {
     if (els.fileStatus) els.fileStatus.textContent = `${file.name} (${Math.round(file.size/1024)} KB)`;
@@ -177,7 +173,7 @@ async function loadPdf(file){
   const ab = await file.arrayBuffer();
   let loadingTask;
   try {
-    loadingTask = window.pdfjsLib.getDocument({data: ab});
+    loadingTask = pdfjsLib.getDocument({data: ab});
     pdfDoc = await loadingTask.promise;
   } catch (err) {
     console.error(err);
