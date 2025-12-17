@@ -1,0 +1,71 @@
+:root{
+  --bg:#0b1220;
+  --card:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.10);
+  --text:#e8eefc;
+  --muted:#b7c5e6;
+  --accent:#2aa3ff;
+  --danger:#ff4b4b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#050914);color:var(--text)}
+.topbar{
+  position:sticky;top:0;z-index:5;
+  display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  padding:12px 14px;background:rgba(5,9,20,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)
+}
+.brand{display:flex;gap:10px;align-items:center}
+.dot{width:14px;height:14px;border-radius:6px;background:var(--accent);box-shadow:0 0 0 6px rgba(42,163,255,.15)}
+.title{font-weight:800;letter-spacing:.2px}
+.subtitle{font-size:12px;color:var(--muted)}
+.pill{font-size:11px;color:#001426;background:var(--accent);padding:2px 8px;border-radius:999px;margin-left:8px;font-weight:800}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.divider{width:1px;height:26px;background:var(--border);margin:0 4px}
+.btn{
+  border:1px solid transparent;background:var(--accent);color:#001426;
+  padding:9px 12px;border-radius:12px;font-weight:800;cursor:pointer
+}
+.btn:hover{filter:brightness(1.05)}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn.danger{background:transparent;border:1px solid rgba(255,75,75,.6);color:#ffd0d0}
+.pg{font-size:13px;color:var(--muted);padding:0 6px}
+.layout{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 62px)}
+.sidebar{padding:14px;border-right:1px solid var(--border);background:rgba(255,255,255,.02)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:12px}
+.cardTitle{font-weight:800;margin-bottom:8px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.kv .k{font-size:11px;color:var(--muted)}
+.kv .v{font-size:13px}
+select{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:6px 8px}
+.hint{font-size:12px;color:var(--muted);margin:8px 0 0 0;line-height:1.4}
+.list{display:flex;flex-direction:column;gap:8px}
+.sym{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03);cursor:pointer}
+.sym:hover{filter:brightness(1.05)}
+.sym.active{outline:2px solid rgba(42,163,255,.45);background:rgba(42,163,255,.08)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);font-size:12px}
+.miniBtn{border:1px solid var(--border);background:transparent;color:var(--text);padding:6px 10px;border-radius:12px;font-weight:800;cursor:pointer}
+.summary{display:flex;flex-direction:column;gap:8px}
+.sumRow{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03);color:var(--muted);font-size:13px}
+.viewerWrap{padding:14px}
+.viewer{
+  position:relative;background:rgba(255,255,255,.02);
+  border:1px solid var(--border);border-radius:18px;overflow:auto;
+  min-height:72vh;display:flex;align-items:flex-start;justify-content:flex-start
+}
+#pdfCanvas{max-width:100%;height:auto;z-index:1;pointer-events:none}
+#overlay{position:absolute;inset:0;z-index:2;pointer-events:auto}
+.watermark{
+  position:absolute;left:14px;bottom:12px;
+  padding:6px 10px;border-radius:999px;
+  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);
+  font-size:12px;color:rgba(255,255,255,.85)
+}
+.toast{
+  position:fixed;right:14px;bottom:14px;max-width:360px;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.14);
+  color:var(--text);padding:10px 12px;border-radius:14px;display:none
+}
+@media (max-width: 980px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{border-right:none;border-bottom:1px solid var(--border)}
+}

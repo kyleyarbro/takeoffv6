@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Clear Path Takeoff — MVP</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <!-- PDF.js (ESM) - pinned to cdnjs 4.6.82 -->
+  <script type="module">
+    import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs';
+    // Worker file for PDF.js 4.x is also ESM
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.mjs';
+    window.pdfjsLib = pdfjsLib;
+  </script>
+  <!-- PDF.js (UMD) -->
+  <!-- Konva (overlay canvas) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.3.18/konva.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="dot"></div>
+      <div>
+        <div class="title">Clear Path Takeoff <span class="pill">MVP</span></div>
+        <div class="subtitle">Click-to-count + basic linear (browser-based)</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <!-- More reliable on iOS than label->hidden input -->
+      <button class="btn ghost" id="openBtn">Open PDF</button>
+      <input id="file" type="file" accept=".pdf,application/pdf" hidden>
+
+      <button class="btn ghost" id="prevPg">◀</button>
+      <div class="pg" id="pgLabel">Page —</div>
+      <div class="pg" id="fileStatus" style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No file</div>
+      <button class="btn ghost" id="nextPg">▶</button>
+
+      <div class="divider"></div>
+      <button class="btn ghost" id="zoomOut">–</button>
+      <div class="pg" id="zoomLabel">100%</div>
+      <button class="btn ghost" id="zoomIn">+</button>
+      <button class="btn ghost" id="zoomFit">Fit</button>
+
+      <div class="divider"></div>
+
+      <button class="btn" id="toolCount">Count</button>
+      <button class="btn ghost" id="toolLine">Linear</button>
+      <button class="btn ghost" id="toolScale">Set Scale</button>
+
+      <div class="divider"></div>
+
+      <button class="btn ghost" id="exportCsv">Export CSV</button>
+      <button class="btn ghost" id="exportPng">Export Marked PNG</button>
+      <button class="btn danger" id="clearPage">Clear Page</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="card">
+        <div class="cardTitle">Project</div>
+        <div class="row">
+          <div class="kv">
+            <div class="k">Scale</div>
+            <div class="v" id="scaleLabel">Not set</div>
+          </div>
+          <div class="kv">
+            <div class="k">Units</div>
+            <div class="v">
+              <select id="units">
+                <option value="ft" selected>ft</option>
+                <option value="in">in</option>
+                <option value="m">m</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <p class="hint">Tip: Use <b>Set Scale</b> and click two points on a known dimension (door 3'-0", grid, etc.).</p>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <div class="cardTitle">Count Items</div>
+          <button class="miniBtn" id="addSymbol">+ Add</button>
+        </div>
+        <div id="symbols" class="list"></div>
+        <p class="hint">Select an item → click on the plan to place a count mark.</p>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">Summary</div>
+        <div id="summary" class="summary"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">Linear</div>
+        <div id="linearList" class="summary"></div>
+        <p class="hint">Select <b>Linear</b> → click points → double-click to finish.</p>
+      </section>
+    </aside>
+
+    <main class="viewerWrap">
+      <div class="viewer" id="viewer">
+        <canvas id="pdfCanvas"></canvas>
+        <div id="overlay"></div>
+        <div class="watermark" id="modeLabel">Open a PDF to start</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
